@@ -82,27 +82,28 @@ if __name__ == "__main__":
     # ################
     #      MODEL
     # ################
-    nodes = ['Boundary input', 'Function 1', 'Function 2', 'Function 3', 'Function 10']
+    nodes = ['Boundary input', 'Function 1', 'Function 2', 'Function 3', 'Function 4', 'Function 10']
     connected_parents = {'Function 1': [['Boundary input']], 'Function 2': [['Function 1']],
-                         'Function 3': [['Function 2']], 'Function 10': [['Function 2']]}
+                         'Function 3': [['Function 2']], 'Function 10': [['Function 2', 'Function 4']]}
+    gate_parents = {'Function 1': '', 'Function 2': '', 'Function 3': '', 'Function 10': 'or'}
     # Probability that the function is weakened independently
     val_weak = {'Function 1': 0.04, 'Function 2': 0.032, 'Function 3': 0.0005,
-                'Function 10': 0.02}
+                'Function 10': 0.02, 'Function 4': 0.024}
     # ################
     #       DATA
     # ################
     # Data from a database. Depends on the function and the phm sensors
     db_phm_on = {'Boundary input': False, 'Function 1': True, 'Function 2': False, 'Function 3': True,
-                 'Function 10': True}
+                 'Function 10': True, 'Function 4': False}
     # PHM off : Introduce 0. in corresponding db variables
     db_phm_eff = {'Boundary input': 0., 'Function 1': 0.95, 'Function 2': 0., 'Function 3': 0.98,
-                  'Function 10': 0.995}
+                  'Function 10': 0.995, 'Function 4': 0.}
     db_phm_err = {'Boundary input': 0., 'Function 1': 0.01, 'Function 2': 0., 'Function 3': 0.001,
-                  'Function 10': 0.02}
+                  'Function 10': 0.02, 'Function 4': 0.}
     db_phm_fck = {'Boundary input': 0., 'Function 1': 0.01, 'Function 2': 0., 'Function 3': 0.05,
-                  'Function 10': 0.07}
+                  'Function 10': 0.07, 'Function 4': 0.}
     db_phm_rpr = {'Boundary input': 0., 'Function 1': 0.9, 'Function 2': 0., 'Function 3': 0.8,
-                  'Function 10': 0.8}
+                  'Function 10': 0.8, 'Function 4': 0.}
     db_phm_dat = {'On': db_phm_on, 'Efficiency': db_phm_eff, 'Error': db_phm_err, 'Fuckup': db_phm_fck,
                   'Repair': db_phm_rpr}
 
@@ -111,7 +112,7 @@ if __name__ == "__main__":
     # ############
     model = BayesianModel()
     for name in nodes:
-        if not name == 'Boundary input':
+        try:
             parents = ['Failure %s' % f for i in connected_parents[name] for f in i]  # If several: identify OR, AND, k/n
             for f in parents:
                 model.add_edge(f, 'Weakness %s' % name)
@@ -120,11 +121,13 @@ if __name__ == "__main__":
             # OR:
             #  Always 1 value to give W(n), next 2^len(upfail) - 1 values to give W(y)
             # Okay-ish because binary, if 5 states, 5^len(upfail) can get really huge
-            gate = 'and'
+            gate = gate_parents[name]
+            # The gate can only be OR or AND. Sometimes, with different flows, we can have both on a function. To treat
+            # that, either flows as function, or a smart gate.
             cpdval = get_cpd(parents, val_weak[name], gate)
             cpd_weakness = TabularCPD(variable='Weakness %s' % name, variable_card=2, values=cpdval, evidence=parents,
                                       evidence_card=[2]*len(parents))
-        else:
+        except KeyError:
             cpd_weakness = TabularCPD(variable='Weakness %s' % name, variable_card=2, values=[[0.12, 0.88]])
 
         model = phm_bn(model, name, cpd_weakness, db_phm_dat)
@@ -149,6 +152,11 @@ if __name__ == "__main__":
     print(infer.query(['Detection Function 3'], evidence={'Failure Boundary input': 0, 'Weakness Function 2': 0})['Detection Function 3'])
     print(infer.query(['Corrective Action Function 3'], evidence={'Failure Boundary input': 0, 'Weakness Function 2': 0})['Corrective Action Function 3'])
     print(infer.query(['Failure Function 3'], evidence={'Failure Boundary input': 0, 'Weakness Function 2': 0})['Failure Function 3'])
+    print('\n\nFunction 4\n\n')
+    print(infer.query(['Weakness Function 4'], evidence={'Failure Boundary input': 0, 'Weakness Function 2': 0})['Weakness Function 4'])
+    print(infer.query(['Detection Function 4'], evidence={'Failure Boundary input': 0, 'Weakness Function 2': 0})['Detection Function 4'])
+    print(infer.query(['Corrective Action Function 4'], evidence={'Failure Boundary input': 0, 'Weakness Function 2': 0})['Corrective Action Function 4'])
+    print(infer.query(['Failure Function 4'], evidence={'Failure Boundary input': 0, 'Weakness Function 2': 0})['Failure Function 4'])
     print('\n\nFunction 10\n\n')
     print(infer.query(['Weakness Function 10'], evidence={'Failure Boundary input': 0, 'Weakness Function 2': 0})['Weakness Function 10'])
     print(infer.query(['Detection Function 10'], evidence={'Failure Boundary input': 0, 'Weakness Function 2': 0})['Detection Function 10'])
