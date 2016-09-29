@@ -2,7 +2,9 @@ from pgmpy.factors.discrete import TabularCPD
 from pgmpy.inference import VariableElimination
 from pgmpy.models import BayesianModel
 
+import numpy as np
 import timing
+import sys
 
 
 def phm_bn(bn_model, fname, cpd_w, phm_dat):
@@ -62,15 +64,34 @@ def phm_bn(bn_model, fname, cpd_w, phm_dat):
     return bn_model
 
 
-def get_cpd(parenting, val, gatetype):
-    if len(parenting) > 1:
-        if gatetype == 'and':
-            cpd = [[1., 0.]] * (2 ** len(parenting) - 1) + [[val, 1 - val]]
-        elif gatetype == 'or':
-            cpd = [[1., 0.]] + [[val, 1 - val]] * (2 ** len(parenting) - 1)
+def get_kofn_cpd(k, n, val):
+    conditions = []
+    cpd = []
+    base = np.array([0, 1])
+    for i in range(n):
+        pattern = np.repeat(base, 2**i)
+        conditions.append(list(pattern) * (2 ** (n-i-1)))
+    conditions = [sum(i) for i in zip(*conditions)]
+    for i, v in enumerate(conditions):
+        if v < k:
+            cpd.append([1., 0.])
         else:
-            import sys
-            sys.exit('Gate k/n not supported yet. Only OR and AND gates.')
+            cpd.append([val, 1-val])
+    return cpd
+
+
+def get_cpd(n, val, gatetype):
+    if n > 1:
+        if gatetype == 'and':
+            cpd = get_kofn_cpd(n, n, val)
+        elif gatetype == 'or':
+            cpd = get_kofn_cpd(1, n, val)
+        elif ' out of ' in gatetype:
+            k = int(gatetype.split()[0])
+            cpd = get_kofn_cpd(k, n, val)
+
+        else:
+            sys.exit('Gate not supported yet. Only OR, AND and KofN gates.')
         cpd = list(map(list, zip(*cpd)))
     else:
         cpd = [[1, val], [0., 1 - val]]
@@ -85,7 +106,7 @@ if __name__ == "__main__":
     nodes = ['Boundary input', 'Function 1', 'Function 2', 'Function 3', 'Function 4', 'Function 10']
     connected_parents = {'Function 1': [['Boundary input']], 'Function 2': [['Function 1']],
                          'Function 3': [['Function 2']], 'Function 10': [['Function 2', 'Function 4']]}
-    gate_parents = {'Function 1': '', 'Function 2': '', 'Function 3': '', 'Function 10': 'or'}
+    gate_parents = {'Function 1': '', 'Function 2': '', 'Function 3': '', 'Function 10': 'and'}
     # Probability that the function is weakened independently
     val_weak = {'Function 1': 0.04, 'Function 2': 0.032, 'Function 3': 0.0005,
                 'Function 10': 0.02, 'Function 4': 0.024}
@@ -113,18 +134,16 @@ if __name__ == "__main__":
     model = BayesianModel()
     for name in nodes:
         try:
-            parents = ['Failure %s' % f for i in connected_parents[name] for f in i]  # If several: identify OR, AND, k/n
+            parents = ['Failure %s' % f for i in connected_parents[name] for f in i]
             for f in parents:
                 model.add_edge(f, 'Weakness %s' % name)
-            # AND:
-            #  Always 2^len(upfail) - 1 values to give W(y), last value to give W(n)
-            # OR:
-            #  Always 1 value to give W(n), next 2^len(upfail) - 1 values to give W(y)
-            # Okay-ish because binary, if 5 states, 5^len(upfail) can get really huge
             gate = gate_parents[name]
             # The gate can only be OR or AND. Sometimes, with different flows, we can have both on a function. To treat
-            # that, either flows as function, or a smart gate.
-            cpdval = get_cpd(parents, val_weak[name], gate)
+            # that, either flows as function in the graph, or a smart gate.
+            if len(parents) > 10:
+                sys.exit("%s: Too many parents (max: 10), not enough memory to deal with it without a smarter "
+                         "algorithm" % name)
+            cpdval = get_cpd(len(parents), val_weak[name], gate)
             cpd_weakness = TabularCPD(variable='Weakness %s' % name, variable_card=2, values=cpdval, evidence=parents,
                                       evidence_card=[2]*len(parents))
         except KeyError:
