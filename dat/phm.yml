@@ -1,0 +1,10 @@
+PHM sensors:
+    phm_1:
+        Efficiency: 0.95
+        Error rate: 0.01
+    phm_2:
+        Efficiency: 0.98
+        Error rate: 0.001
+    phm_3:
+        Efficiency: 0.995
+        Error rate: 0.02

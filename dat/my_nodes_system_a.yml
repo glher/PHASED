@@ -1,0 +1,114 @@
+Boundary input:
+    Comment: Input of the functional model
+    Class:
+        Primary:
+        Secondary:
+        Tertiary:
+    Flows:
+    Weakness:
+    Parents:
+    Gate:
+    PHM:
+Function 1:
+    Comment:
+    Class:
+        Primary:
+        Secondary:
+        Tertiary:
+    Flows:
+          Flow 1:
+              Class:
+                  Primary:
+                  Secondary:
+                  Tertiary:
+    Weakness: 0.04
+    Parents: Boundary input
+    Gate:
+    PHM:
+        sensor: phm_1
+        repair: 0.9
+        fuckup: 0.01
+Function 2:
+    Comment:
+    Class:
+        Primary:
+        Secondary:
+        Tertiary:
+    Flows:
+          Flow 1:
+              Class:
+                  Primary:
+                  Secondary:
+                  Tertiary:
+    Weakness: 0.032
+    Parents: Function 1
+    Gate:
+    PHM:
+Function 3:
+    Comment:
+    Class:
+        Primary:
+        Secondary:
+        Tertiary:
+    Flows:
+          Flow 1:
+              Class:
+                  Primary:
+                  Secondary:
+                  Tertiary:
+    Weakness: 0.0005
+    Parents: Function 2
+    Gate:
+    PHM:
+        sensor: phm_2
+        repair: 0.8
+        fuckup: 0.05
+Function 4:
+    Comment:
+    Class:
+        Primary:
+        Secondary:
+        Tertiary:
+    Flows:
+          Flow 1:
+              Class:
+                  Primary:
+                  Secondary:
+                  Tertiary:
+    Weakness: 0.024
+    Parents: Boundary input
+    Gate:
+    PHM:
+Gate 1 f2-f4:
+    Comment: OR Gate between function 2 and function 4
+    Class:
+        Primary:
+        Secondary:
+        Tertiary:
+    Flows:
+    Weakness:
+    Parents:
+        - Function 2
+        - Function 4
+    Gate: OR
+Function 10:
+    Comment:
+    Class:
+        Primary:
+        Secondary:
+        Tertiary:
+    Flows:
+          Flow 1:
+              Class:
+                  Primary:
+                  Secondary:
+                  Tertiary:
+    Weakness: 0.02
+    Parents:
+        - Gate 1 f2-f4
+        - Function 3
+    Gate: AND
+    PHM:
+        sensor: phm_3
+        repair: 0.8
+        fuckup: 0.0
