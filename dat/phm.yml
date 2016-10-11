@@ -1,10 +1,19 @@
 PHM sensors:
     phm_1:
-        Efficiency: 0.95
+        Efficiency:
+            zero: 0.95
+            low: 0.78
+            high: 0.85
         Error rate: 0.01
     phm_2:
-        Efficiency: 0.98
+        Efficiency:
+            zero: 0.98
+            low: 0.67
+            high: 0.84
         Error rate: 0.001
     phm_3:
-        Efficiency: 0.995
+        Efficiency:
+            zero: 0.995
+            low: 0.99
+            high: 0.99
         Error rate: 0.02

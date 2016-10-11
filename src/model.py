@@ -10,6 +10,12 @@ class ModelData:
         self.phm_file = 'dat/phm.yml'
         with open(self.phm_file, 'r') as yml:
             self.phm = self.ordered_load(yml)
+        self.matrix = 'dat/matrix_y.yml'
+        with open(self.matrix, 'r') as yml:
+            self.matrix_y = self.ordered_load(yml)
+        self.matrix = 'dat/matrix_n.yml'
+        with open(self.matrix, 'r') as yml:
+            self.matrix_n = self.ordered_load(yml)
 
     @staticmethod
     def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
@@ -54,9 +60,24 @@ class ModelData:
 
         val_weak = {}
         for k in self.system:
-            if not self.system[k]['Weakness']:
+            if self.system[k]['Weakness'] is None:
                 continue
             val_weak[k] = float(self.system[k]['Weakness'])
+
+        class_fm = {}
+        for k in self.system:
+            primary = self.system[k]['Class']['Primary']
+            secondary = self.system[k]['Class']['Secondary']
+            tertiary = self.system[k]['Class']['Tertiary']
+            if primary is None:
+                continue
+            if secondary is None:
+                secondary = ''
+                tertiary = ''
+            if tertiary is None:
+                tertiary = ''
+            primary = self.system[k]['Class']['Primary']
+            class_fm[k] = ' '.join([primary, secondary, tertiary]).rstrip()
         # ################
         #       DATA
         # ################
@@ -72,16 +93,28 @@ class ModelData:
                 continue
             if not self.system[k]['PHM']:
                 db_phm_on[k] = False
-                db_phm_eff[k] = 0.
+                db_phm_eff[k] = {}
+                db_phm_eff[k]['zero'] = 0.
+                db_phm_eff[k]['low'] = 0.
+                db_phm_eff[k]['high'] = 0.
                 db_phm_err[k] = 0.
-                db_phm_rpr[k] = 0.
+                db_phm_rpr[k] = {}
+                db_phm_rpr[k]['zero'] = 0.
+                db_phm_rpr[k]['low'] = 0.
+                db_phm_rpr[k]['high'] = 0.
                 db_phm_fck[k] = 0.
                 continue
             db_phm_on[k] = True
             sensor = self.system[k]['PHM']['sensor']
-            db_phm_eff[k] = float(self.phm['PHM sensors'][sensor]['Efficiency'])
+            db_phm_eff[k] = {}
+            db_phm_eff[k]['zero'] = float(self.phm['PHM sensors'][sensor]['Efficiency']['zero'])
+            db_phm_eff[k]['low'] = float(self.phm['PHM sensors'][sensor]['Efficiency']['low'])
+            db_phm_eff[k]['high'] = float(self.phm['PHM sensors'][sensor]['Efficiency']['high'])
             db_phm_err[k] = float(self.phm['PHM sensors'][sensor]['Error rate'])
-            db_phm_rpr[k] = float(self.system[k]['PHM']['repair'])
+            db_phm_rpr[k] = {}
+            db_phm_rpr[k]['zero'] = float(self.system[k]['PHM']['repair']['zero'])
+            db_phm_rpr[k]['low'] = float(self.system[k]['PHM']['repair']['low'])
+            db_phm_rpr[k]['high'] = float(self.system[k]['PHM']['repair']['high'])
             db_phm_fck[k] = float(self.system[k]['PHM']['fuckup'])
 
         db_phm_dat = {'On': db_phm_on,
@@ -89,12 +122,18 @@ class ModelData:
                       'Error': db_phm_err,
                       'Fuckup': db_phm_fck,
                       'Repair': db_phm_rpr}
+        # #################
+        #     MATRICES
+        # #################
+        # Matrices linking function and flow failures and weaknesses
 
         dict_model = {'nodes': nodes,
+                      'classes': class_fm,
                       'connected parents': connected_parents,
                       'gate parents': gate_parents,
                       'value weakness': val_weak,
-                      'database phm': db_phm_dat}
+                      'database phm': db_phm_dat,
+                      'matrices': [self.matrix_y, self.matrix_n]}
         return dict_model
 
     @staticmethod

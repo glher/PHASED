@@ -4,111 +4,200 @@ Boundary input:
         Primary:
         Secondary:
         Tertiary:
-    Flows:
-    Weakness:
+    Weakness: 0.12
     Parents:
     Gate:
     PHM:
-Function 1:
+Flow b;1:
     Comment:
     Class:
-        Primary:
-        Secondary:
+        Primary: Material
+        Secondary: Gas
         Tertiary:
-    Flows:
-          Flow 1:
-              Class:
-                  Primary:
-                  Secondary:
-                  Tertiary:
-    Weakness: 0.04
+    Weakness: 0.
     Parents: Boundary input
     Gate:
     PHM:
         sensor: phm_1
-        repair: 0.9
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
+Function 1:
+    Comment:
+    Class:
+        Primary: Control Magnitude
+        Secondary:
+        Tertiary:
+    Weakness: 0.04
+    Parents: Flow b;1
+    Gate:
+    PHM:
+        sensor: phm_1
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
+Flow 1;2:
+    Comment:
+    Class:
+        Primary: Material
+        Secondary: Gas
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 1
+    Gate:
+    PHM:
+        sensor: phm_1
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
         fuckup: 0.01
 Function 2:
     Comment:
     Class:
-        Primary:
+        Primary: Control Magnitude
         Secondary:
         Tertiary:
-    Flows:
-          Flow 1:
-              Class:
-                  Primary:
-                  Secondary:
-                  Tertiary:
     Weakness: 0.032
-    Parents: Function 1
+    Parents: Flow 1;2
     Gate:
     PHM:
-Function 3:
+Flow 2;3:
     Comment:
     Class:
-        Primary:
-        Secondary:
+        Primary: Material
+        Secondary: Gas
         Tertiary:
-    Flows:
-          Flow 1:
-              Class:
-                  Primary:
-                  Secondary:
-                  Tertiary:
-    Weakness: 0.0005
+    Weakness: 0.
     Parents: Function 2
     Gate:
     PHM:
-        sensor: phm_2
-        repair: 0.8
-        fuckup: 0.05
-Function 4:
+        sensor: phm_1
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
+Function 3:
     Comment:
     Class:
-        Primary:
+        Primary: Control Magnitude
         Secondary:
         Tertiary:
-    Flows:
-          Flow 1:
-              Class:
-                  Primary:
-                  Secondary:
-                  Tertiary:
-    Weakness: 0.024
+    Weakness: 0.0005
+    Parents: Flow 2;3
+    Gate:
+    PHM:
+        sensor: phm_2
+        repair:
+            zero: 0.7
+            low: 0.8
+            high: 0.75
+        fuckup: 0.05
+Flow b;4:
+    Comment:
+    Class:
+        Primary: Material
+        Secondary: Gas
+        Tertiary:
+    Weakness: 0.
     Parents: Boundary input
     Gate:
     PHM:
+        sensor: phm_1
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
+Function 4:
+    Comment:
+    Class:
+        Primary: Control Magnitude
+        Secondary:
+        Tertiary:
+    Weakness: 0.024
+    Parents: Flow b;4
+    Gate:
+    PHM:
+Flow 4;g1:
+    Comment:
+    Class:
+        Primary: Material
+        Secondary: Gas
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 4
+    Gate:
+    PHM:
+        sensor: phm_1
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
+Flow 2;g1:
+    Comment:
+    Class:
+        Primary: Material
+        Secondary: Gas
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 2
+    Gate:
+    PHM:
+        sensor: phm_1
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
 Gate 1 f2-f4:
     Comment: OR Gate between function 2 and function 4
     Class:
         Primary:
         Secondary:
         Tertiary:
-    Flows:
     Weakness:
     Parents:
-        - Function 2
-        - Function 4
+        - Flow 2;g1
+        - Flow 4;g1
     Gate: OR
+Flow 3;10:
+    Comment:
+    Class:
+        Primary: Material
+        Secondary: Gas
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 3
+    Gate:
+    PHM:
+        sensor: phm_1
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
 Function 10:
     Comment:
     Class:
-        Primary:
+        Primary: Control Magnitude
         Secondary:
         Tertiary:
-    Flows:
-          Flow 1:
-              Class:
-                  Primary:
-                  Secondary:
-                  Tertiary:
     Weakness: 0.02
     Parents:
         - Gate 1 f2-f4
-        - Function 3
+        - Flow 3;10
     Gate: AND
     PHM:
         sensor: phm_3
-        repair: 0.8
+        repair:
+            zero: 0.7
+            low: 0.8
+            high: 0.75
         fuckup: 0.0

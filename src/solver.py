@@ -1,4 +1,4 @@
-from pgmpy.inference import VariableElimination
+from pgm.inference import VariableElimination
 
 
 class Solver:
@@ -7,7 +7,6 @@ class Solver:
         self.evidence = evidence
         self.display = display
         self.bayesian_model = bayesian_model
-        print(type(bayesian_model))
         self.inference = VariableElimination(self.bayesian_model)
 
     def get_inference(self, fname, fevidence):
