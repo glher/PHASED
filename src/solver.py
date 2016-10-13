@@ -1,3 +1,5 @@
+import sys
+
 from pgm.inference import VariableElimination
 
 
@@ -9,24 +11,46 @@ class Solver:
         self.bayesian_model = bayesian_model
         self.inference = VariableElimination(self.bayesian_model)
 
-    def get_inference(self, fname, fevidence):
+    def get_inference(self, fname):
         print('%s\n\n' % fname)
         if 'Gate' in fname:
-            print(self.inference.query([fname], evidence=fevidence)[fname])
+            print(self.inference.query([fname], evidence=self.evidence)[fname])
         else:
-            for param in ['Weakness %s' % fname,
-                          'Detection %s' % fname,
-                          'Corrective Action %s' % fname,
+            for param in [#'Weakness %s' % fname,
+                          #'Detection %s' % fname,
+                          #'Corrective Action %s' % fname,
                           'Failure %s' % fname]:
-                if param in fevidence:
+                if param in self.evidence:
                     continue
-                if fevidence:
-                    print(self.inference.query([param], evidence=fevidence)[param])
+                if self.evidence:
+                    print(self.inference.query([param], evidence=self.evidence)[param])
                 else:
                     print(self.inference.query([param])[param])
         print('\n\n')
 
-    def run(self):
+    def get_map_param(self, fname, param):
+        if 'Gate' in fname:
+            if fname not in self.evidence:
+                param.append(fname)
+        else:
+            for p in ['Weakness %s' % fname,
+                      'Detection %s' % fname,
+                      'Corrective Action %s' % fname,
+                      'Failure %s' % fname]:
+                if p not in self.evidence:
+                    param.append(p)
+        return param
+
+    def run(self, mapquery=False):
         # (0 = yes, 1 = no)
+        param = []
         for f in self.display:
-            self.get_inference(f, self.evidence)
+            if not mapquery:
+                self.get_inference(f)
+            else:
+                param = self.get_map_param(f, param)
+        if mapquery:
+            print(len(param))
+            if len(param) > 20:
+                sys.exit("Potential memory overload. Abort.")
+            print(self.inference.map_query(param, evidence=self.evidence))

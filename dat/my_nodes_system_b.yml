@@ -1,0 +1,68 @@
+Boundary input:
+    Comment: Input of the functional model
+    Class:
+        Primary:
+        Secondary:
+        Tertiary:
+    Weakness: 0.12
+    Parents:
+    Gate:
+    PHM:
+Flow b;1:
+    Comment:
+    Class:
+        Primary: Material
+        Secondary: Gas
+        Tertiary:
+    Weakness: 0.
+    Parents: Boundary input
+    Gate:
+    PHM:
+        sensor: phm_1
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
+Function 1:
+    Comment:
+    Class:
+        Primary: Control Magnitude
+        Secondary:
+        Tertiary:
+    Weakness: 0.04
+    Parents: Flow b;1
+    Gate:
+    PHM:
+        sensor: phm_1
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
+Flow 1;2:
+    Comment:
+    Class:
+        Primary: Material
+        Secondary: Gas
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 1
+    Gate:
+    PHM:
+        sensor: phm_1
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
+Function 2:
+    Comment:
+    Class:
+        Primary: Control Magnitude
+        Secondary:
+        Tertiary:
+    Weakness: 0.032
+    Parents: Flow 1;2
+    Gate:
+    PHM:

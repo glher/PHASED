@@ -12,8 +12,12 @@ if __name__ == "__main__":
     bn = BayesianNetwork(model_description)
     bayesian_model = bn.build()
     # Solve the model
-    evidence = {'Weakness Function 1': 0, 'Weakness Function 2': 0, 'Weakness Boundary input': 1}
-    display = ['Boundary input',
+    evidence = {'Weakness Boundary input': 1}
+    # Optimize:
+    #   - Display only critical functions/flows
+    #   - Do not print
+    display = [
+               'Boundary input',
                'Flow b;1',
                'Function 1',
                'Flow 1;2',
@@ -26,6 +30,7 @@ if __name__ == "__main__":
                'Flow 2;g1',
                'Gate 1 f2-f4',
                'Flow 3;10',
-               'Function 10']
+               'Function 10'
+               ]
     solver = Solver(bayesian_model, display, evidence)
-    solver.run()
+    solver.run(mapquery=False)
