@@ -11,10 +11,11 @@ class Solver:
         self.bayesian_model = bayesian_model
         self.inference = VariableElimination(self.bayesian_model)
 
-    def get_inference(self, fname):
-        print('%s\n\n' % fname)
+    def get_inference(self, fname, score):
+        # print('%s\n\n' % fname)
         if 'Gate' in fname:
-            print(self.inference.query([fname], evidence=self.evidence)[fname])
+            # print(self.inference.query([fname], evidence=self.evidence)[fname])
+            pass
         else:
             for param in [#'Weakness %s' % fname,
                           #'Detection %s' % fname,
@@ -23,10 +24,10 @@ class Solver:
                 if param in self.evidence:
                     continue
                 if self.evidence:
-                    print(self.inference.query([param], evidence=self.evidence)[param])
+                    score += self.inference.query([param], evidence=self.evidence)[param].values[0]
                 else:
-                    print(self.inference.query([param])[param])
-        print('\n\n')
+                    score += self.inference.query([param])[param].values[0]
+        return score
 
     def get_map_param(self, fname, param):
         if 'Gate' in fname:
@@ -44,9 +45,10 @@ class Solver:
     def run(self, mapquery=False):
         # (0 = yes, 1 = no)
         param = []
+        score = 0.
         for f in self.display:
             if not mapquery:
-                self.get_inference(f)
+                score += self.get_inference(f, score)
             else:
                 param = self.get_map_param(f, param)
         if mapquery:
@@ -54,3 +56,4 @@ class Solver:
             if len(param) > 20:
                 sys.exit("Potential memory overload. Abort.")
             print(self.inference.map_query(param, evidence=self.evidence))
+        return score

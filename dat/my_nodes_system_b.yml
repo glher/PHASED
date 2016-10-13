@@ -8,6 +8,11 @@ Boundary input:
     Parents:
     Gate:
     PHM:
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01
 Flow b;1:
     Comment:
     Class:
@@ -18,7 +23,6 @@ Flow b;1:
     Parents: Boundary input
     Gate:
     PHM:
-        sensor: phm_1
         repair:
             zero: 0.8
             low: 0.9
@@ -34,7 +38,6 @@ Function 1:
     Parents: Flow b;1
     Gate:
     PHM:
-        sensor: phm_1
         repair:
             zero: 0.8
             low: 0.9
@@ -50,7 +53,6 @@ Flow 1;2:
     Parents: Function 1
     Gate:
     PHM:
-        sensor: phm_1
         repair:
             zero: 0.8
             low: 0.9
@@ -66,3 +68,8 @@ Function 2:
     Parents: Flow 1;2
     Gate:
     PHM:
+        repair:
+            zero: 0.8
+            low: 0.9
+            high: 0.85
+        fuckup: 0.01

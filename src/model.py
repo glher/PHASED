@@ -1,10 +1,11 @@
 import yaml
 from collections import OrderedDict
 
+
 class ModelData:
 
     def __init__(self):
-        self.yml_file = 'dat/my_nodes_system_a.yml'
+        self.yml_file = 'dat/my_nodes_system_b.yml'
         with open(self.yml_file, 'r') as yml:
             self.system = self.ordered_load(yml)
         self.phm_file = 'dat/phm.yml'
@@ -78,6 +79,20 @@ class ModelData:
                 tertiary = ''
             primary = self.system[k]['Class']['Primary']
             class_fm[k] = ' '.join([primary, secondary, tertiary]).rstrip()
+        # #################
+        #     MATRICES
+        # #################
+        # Matrices linking function and flow failures and weaknesses
+
+        dict_model = {'nodes': nodes,
+                      'classes': class_fm,
+                      'connected parents': connected_parents,
+                      'gate parents': gate_parents,
+                      'value weakness': val_weak,
+                      'matrices': [self.matrix_y, self.matrix_n]}
+        return dict_model
+
+    def load_phm(self, dict_model, state):
         # ################
         #       DATA
         # ################
@@ -88,10 +103,11 @@ class ModelData:
         db_phm_err = {}
         db_phm_rpr = {}
         db_phm_fck = {}
-        for k in self.system:
+
+        for i, k in enumerate(self.system):
             if 'Gate' in k:
                 continue
-            if not self.system[k]['PHM']:
+            if state[i] == '0':
                 db_phm_on[k] = False
                 db_phm_eff[k] = {}
                 db_phm_eff[k]['zero'] = 0.
@@ -105,7 +121,7 @@ class ModelData:
                 db_phm_fck[k] = 0.
                 continue
             db_phm_on[k] = True
-            sensor = self.system[k]['PHM']['sensor']
+            sensor = state[i]
             db_phm_eff[k] = {}
             db_phm_eff[k]['zero'] = float(self.phm['PHM sensors'][sensor]['Efficiency']['zero'])
             db_phm_eff[k]['low'] = float(self.phm['PHM sensors'][sensor]['Efficiency']['low'])
@@ -122,18 +138,8 @@ class ModelData:
                       'Error': db_phm_err,
                       'Fuckup': db_phm_fck,
                       'Repair': db_phm_rpr}
-        # #################
-        #     MATRICES
-        # #################
-        # Matrices linking function and flow failures and weaknesses
 
-        dict_model = {'nodes': nodes,
-                      'classes': class_fm,
-                      'connected parents': connected_parents,
-                      'gate parents': gate_parents,
-                      'value weakness': val_weak,
-                      'database phm': db_phm_dat,
-                      'matrices': [self.matrix_y, self.matrix_n]}
+        dict_model['database phm'] = db_phm_dat
         return dict_model
 
     @staticmethod
