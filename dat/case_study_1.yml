@@ -1,0 +1,395 @@
+Function 1:
+    Comment: Core
+    Class:
+        Primary: Provision
+        Secondary: Store
+        Tertiary:
+    Weakness: 0.1
+    Parents:
+    Gate:
+    PHM:
+        repair:
+            zero: 1.
+            low: 0.
+            high: 0.
+        fuckup: 0.
+Function 2:
+    Comment: Vessel
+    Class:
+        Primary: Provision
+        Secondary: Store
+        Tertiary: Contain
+    Weakness: 0.002
+    Parents:
+        - Flow 1;2
+    Gate:
+    PHM:
+        repair:
+            zero: 0.
+            low: 0.
+            high: 0.
+        fuckup: 0.
+Function 3:
+    Comment: Primary water
+    Class:
+        Primary: Provision
+        Secondary: Store
+        Tertiary: Contain
+    Weakness: 0.01
+    Parents:
+        - Flow 1;3-a
+        - Flow 1;3-b
+    Gate: AND
+    PHM:
+        repair:
+            zero: 0.
+            low: 0.
+            high: 0.
+        fuckup: 0.
+Function 4:
+    Comment: Heat Exchanger
+    Class:
+        Primary: Channel
+        Secondary: Transfer
+        Tertiary:
+    Weakness: 0.0005
+    Parents:
+        - Flow 3;4
+        - Gate f11-f12
+    Gate: AND
+    PHM:
+        repair:
+            zero: 1.
+            low: 0.
+            high: 0.
+        fuckup: 0.
+Function 5:
+    Comment: Secondary water
+    Class:
+        Primary: Provision
+        Secondary: Store
+        Tertiary: Contain
+    Weakness: 0.0015
+    Parents: Flow 4;5
+    Gate:
+    PHM:
+        repair:
+            zero: 0.
+            low: 0.
+            high: 0.
+        fuckup: 0.
+Function 6:
+    Comment: Steam generator
+    Class:
+        Primary: Convert
+        Secondary: Convert
+        Tertiary:
+    Weakness: 0.04
+    Parents:
+        - Flow 5;6-a
+        - Flow 5;6-b
+    Gate: AND
+    PHM:
+        repair:
+            zero: 0.
+            low: 0.
+            high: 0.
+        fuckup: 0.
+Function 7:
+    Comment: Turbine
+    Class:
+        Primary: Convert
+        Secondary: Convert
+        Tertiary:
+    Weakness: 0.008
+    Parents: Flow 6;7
+    Gate:
+    PHM:
+        repair:
+            zero: 0.95
+            low: 0.
+            high: 0.
+        fuckup: 0.001
+Function 8:
+    Comment: Condenser
+    Class:
+        Primary: Convert
+        Secondary: Convert
+        Tertiary:
+    Weakness: 0.0009
+    Parents:
+        - Flow 7;8
+        - Flow 9;8
+    Gate:
+    PHM:
+        repair:
+            zero: 0.95
+            low: 0.
+            high: 0.
+        fuckup: 0.001
+Function 9:
+    Comment: Heat sink
+    Class:
+        Primary: Provision
+        Secondary: Supply
+        Tertiary:
+    Weakness: 0.01
+    Parents:
+    Gate:
+    PHM:
+        repair:
+            zero: 0.80
+            low: 0.
+            high: 0.
+        fuckup: 0.001
+Function 10:
+    Comment: Generator
+    Class:
+        Primary: Convert
+        Secondary: Convert
+        Tertiary:
+    Weakness: 0.03
+    Parents: Flow 7;10
+    Gate:
+    PHM:
+        repair:
+            zero: 0.95
+            low: 0.
+            high: 0.
+        fuckup: 0.001
+Function 11:
+    Comment: Generator
+    Class:
+        Primary: Convert
+        Secondary: Convert
+        Tertiary:
+    Weakness: 0.03
+    Parents:
+    Gate:
+    PHM:
+        repair:
+            zero: 0.95
+            low: 0.
+            high: 0.
+        fuckup: 0.001
+Function 12:
+    Comment: Generator
+    Class:
+        Primary: Convert
+        Secondary: Convert
+        Tertiary:
+    Weakness: 0.007
+    Parents:
+    Gate:
+    PHM:
+        repair:
+            zero: 0.95
+            low: 0.
+            high: 0.
+        fuckup: 0.001
+Flow 1;2:
+    Comment: OOS - Radioactive energy
+    Class:
+        Primary: Energy
+        Secondary: Radioactive
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 1
+    Gate:
+    PHM:
+        repair:
+            zero: 0.
+            low: 0.
+            high: 0.
+        fuckup: 0.
+Flow 1;3-a:
+    Comment: Heat
+    Class:
+        Primary: Energy
+        Secondary: Thermal
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 1
+    Gate:
+    PHM:
+        repair:
+            zero: 0.6
+            low: 0.99
+            high: 1.
+        fuckup: 0.005
+Flow 1;3-b:
+    Comment: OOS - Radioactive energy
+    Class:
+        Primary: Energy
+        Secondary: Radioactive
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 1
+    Gate:
+    PHM:
+        repair:
+            zero: 0.
+            low: 0.
+            high: 0.
+        fuckup: 0.
+Flow 3;4:
+    Comment: Heat
+    Class:
+        Primary: Energy
+        Secondary: Thermal
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 3
+    Gate:
+    PHM:
+        repair:
+            zero: 0.6
+            low: 0.99
+            high: 1.
+        fuckup: 0.005
+Flow 4;5:
+    Comment: Heat
+    Class:
+        Primary: Energy
+        Secondary: Thermal
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 4
+    Gate:
+    PHM:
+        repair:
+            zero: 0.6
+            low: 0.99
+            high: 1.
+        fuckup: 0.005
+Flow 5;6-a:
+    Comment: Heat
+    Class:
+        Primary: Energy
+        Secondary: Thermal
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 5
+    Gate:
+    PHM:
+        repair:
+            zero: 0.6
+            low: 0.99
+            high: 1.
+        fuckup: 0.005
+Flow 5;6-b:
+    Comment: Water
+    Class:
+        Primary: Material
+        Secondary: Liquid
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 5
+    Gate:
+    PHM:
+        repair:
+            zero: 0.
+            low: 0.
+            high: 0.
+        fuckup: 0.
+Flow 6;7:
+    Comment: Vapor
+    Class:
+        Primary: Material
+        Secondary: Gas
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 6
+    Gate:
+    PHM:
+        repair:
+            zero: 0.8
+            low: 0.8
+            high: 0.8
+        fuckup: 0.
+Flow 7;8:
+    Comment: Vapor
+    Class:
+        Primary: Material
+        Secondary: Gas
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 7
+    Gate:
+    PHM:
+        repair:
+            zero: 0.8
+            low: 0.8
+            high: 0.8
+        fuckup: 0.
+Flow 9;8:
+    Comment: Heat
+    Class:
+        Primary: Energy
+        Secondary: Thermal
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 9
+    Gate:
+    PHM:
+        repair:
+            zero: 0.9
+            low: 0.99
+            high: 1.
+        fuckup: 0.001
+Flow 7;10:
+    Comment: Mechanical energy
+    Class:
+        Primary: Energy
+        Secondary: Mechanical
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 7
+    Gate:
+    PHM:
+        repair:
+            zero: 0.8
+            low: 0.8
+            high: 0.8
+        fuckup: 0.001
+Flow 11;4:
+    Comment: Electrical energy
+    Class:
+        Primary: Energy
+        Secondary: Electrical
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 11
+    Gate:
+    PHM:
+        repair:
+            zero: 0.7
+            low: 0.9
+            high: 0.9
+        fuckup: 0.1
+Flow 12;4:
+    Comment: Electrical energy
+    Class:
+        Primary: Energy
+        Secondary: Electrical
+        Tertiary:
+    Weakness: 0.
+    Parents: Function 12
+    Gate:
+    PHM:
+        repair:
+            zero: 0.7
+            low: 0.9
+            high: 0.9
+        fuckup: 0.1
+Gate f11-f12:
+    Comment: OR Gate between function 11 and function 12
+    Class:
+        Primary:
+        Secondary:
+        Tertiary:
+    Weakness:
+    Parents:
+        - Flow 11;4
+        - Flow 12;4
+    Gate: OR

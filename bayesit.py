@@ -1,25 +1,27 @@
 from src.bayesian import BayesianNetwork
 from src.model import ModelData
 from src.solver import Solver
+from src.positions import CombineSensors
 import timing
-
-import itertools
-import numpy as np
+import sys
 from collections import OrderedDict
 
 
 if __name__ == "__main__":
+    truncation = True
     # Solve the model
-    evidence = {'Weakness Boundary input': 1}
+    # 1 = n, 0 = y (sorry)
+    evidence = {'Weakness Function 2': 0}
+    # evidence = {'Weakness Function 5': 1}
     # Optimize:
     #   - Display only critical functions/flows
     #   - Do not print
     display = [
                # 'Boundary input',
                # 'Flow b;1',
-               'Function 1',
+               #'Function 1',
                # 'Flow 1;2',
-               'Function 2',
+               # 'Function 2',
                # 'Flow 2;3',
                # 'Function 3',
                # 'Flow b;4',
@@ -28,36 +30,21 @@ if __name__ == "__main__":
                # 'Flow 2;g1',
                # 'Gate 1 f2-f4',
                # 'Flow 3;10',
-               # 'Function 10'
+               'Function 10'
                ]
     # Load the data
     model = ModelData()
     model_description = model.load()
+
+    position = CombineSensors(model_description)
+    states = position.run()
+    if len(states) > 5000:
+        sys.exit('Probably too long, not gonna bother now')
+
+    ########################################################################################
     # Number of functions and flows
-    cnt = 0
-    idx_nosensor = {}
-    exception_sensors = {'Boundary': '0', 'Gate': '0'}
-    for i, n in enumerate(model_description['nodes']):
-        for e in exception_sensors:
-            if e in n:
-                idx_nosensor[i] = exception_sensors[e]
-        cnt += 1
-    # Given inventory
-    inventory = {'phm_1': 3, 'phm_2': 1}
-    state = []
-    inventory_list = list(inventory.keys()) + [0]
-
-    states = np.array([p for p in itertools.product(inventory_list, repeat=cnt)])
-    for v in inventory:
-        delete = np.where(states == v)[0]
-        idx = np.where(np.bincount(delete) > inventory[v])
-        states = np.delete(states, idx, axis=0)
-    for i in idx_nosensor:
-        states = states[states[:, i] == idx_nosensor[i]]
-
-    failure = 1.
+    failure = 2.
     final_state = []
-    print('Number of possible permutations: %s' % len(states))
     for state in states:
         print(state)
         model_description = model.load_phm(model_description, state)

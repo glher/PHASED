@@ -4,7 +4,7 @@ Boundary input:
         Primary:
         Secondary:
         Tertiary:
-    Weakness: 0.12
+    Weakness: 0.000012
     Parents:
     Gate:
     PHM:
@@ -35,7 +35,7 @@ Function 1:
         Primary: Control Magnitude
         Secondary:
         Tertiary:
-    Weakness: 0.04
+    Weakness: 0.000004
     Parents: Flow b;1
     Gate:
     PHM:
@@ -67,7 +67,7 @@ Function 2:
         Primary: Control Magnitude
         Secondary:
         Tertiary:
-    Weakness: 0.032
+    Weakness: 0.0000032
     Parents: Flow 1;2
     Gate:
     PHM:
@@ -86,7 +86,6 @@ Flow 2;3:
     Parents: Function 2
     Gate:
     PHM:
-        sensor: phm_1
         repair:
             zero: 0.8
             low: 0.9
@@ -98,7 +97,7 @@ Function 3:
         Primary: Control Magnitude
         Secondary:
         Tertiary:
-    Weakness: 0.0005
+    Weakness: 0.00005
     Parents: Flow 2;3
     Gate:
     PHM:
@@ -130,7 +129,7 @@ Function 4:
         Primary: Control Magnitude
         Secondary:
         Tertiary:
-    Weakness: 0.024
+    Weakness: 0.00024
     Parents: Flow b;4
     Gate:
     PHM:
@@ -204,7 +203,7 @@ Function 10:
         Primary: Control Magnitude
         Secondary:
         Tertiary:
-    Weakness: 0.02
+    Weakness: 0.002
     Parents:
         - Gate 1 f2-f4
         - Flow 3;10

@@ -1,19 +1,31 @@
-PHM sensors:
-    phm_1:
-        Efficiency:
-            zero: 0.95
-            low: 0.78
-            high: 0.85
+phm_1:
+    Convert:
+        Efficiency: 0.95
         Error rate: 0.01
-    phm_2:
+phm_2:
+    Thermal:
         Efficiency:
             zero: 0.98
-            low: 0.67
-            high: 0.84
+            low: 0.91
+            high: 0.95
         Error rate: 0.001
-    phm_3:
-        Efficiency:
-            zero: 0.995
-            low: 0.99
-            high: 0.99
+phm_3:
+    Control Magnitude:
+        Efficiency: 0.995
         Error rate: 0.02
+    Branch:
+        Efficiency: 0.995
+        Error rate: 0.02
+    Channel:
+        Efficiency: 0.995
+        Error rate: 0.02
+    Material:
+        Efficiency:
+            zero: 0.5
+            low: 0.4
+            high: 0.45
+        Error rate: 0.2
+phm_4:
+    Convert:
+        Efficiency: 0.85
+        Error rate: 0.03
