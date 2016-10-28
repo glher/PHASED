@@ -8,7 +8,7 @@ phm_2:
             zero: 0.98
             low: 0.91
             high: 0.95
-        Error rate: 0.001
+        Error rate: 0.01
 phm_3:
     Control Magnitude:
         Efficiency: 0.995
@@ -26,6 +26,9 @@ phm_3:
             high: 0.45
         Error rate: 0.2
 phm_4:
-    Convert:
-        Efficiency: 0.85
-        Error rate: 0.03
+    Thermal:
+        Efficiency:
+            zero: 0.88
+            low: 0.88
+            high: 0.88
+        Error rate: 0.001

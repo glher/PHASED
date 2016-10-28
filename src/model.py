@@ -121,18 +121,22 @@ class ModelData:
                 db_phm_fck[k] = 0.
                 continue
             #  Identify the function or flow of interest
-            name = dict_model['classes'][k].split(' - ')[-1]
+            names = dict_model['classes'][k].split(' - ')
             #  Get the information from the database
             db_phm_on[k] = True
             sensor = state[i]
             db_phm_eff[k] = {}
-            try:
-                db_phm_eff[k]['zero'] = float(self.phm[sensor][name]['Efficiency']['zero'])
-                db_phm_eff[k]['low'] = float(self.phm[sensor][name]['Efficiency']['low'])
-                db_phm_eff[k]['high'] = float(self.phm[sensor][name]['Efficiency']['high'])
-            except TypeError:
-                db_phm_eff[k]['zero'] = float(self.phm[sensor][name]['Efficiency'])
-            db_phm_err[k] = float(self.phm[sensor][name]['Error rate'])
+            for name in reversed(names):
+                try:
+                    db_phm_eff[k]['zero'] = float(self.phm[sensor][name]['Efficiency']['zero'])
+                    db_phm_eff[k]['low'] = float(self.phm[sensor][name]['Efficiency']['low'])
+                    db_phm_eff[k]['high'] = float(self.phm[sensor][name]['Efficiency']['high'])
+                    db_phm_err[k] = float(self.phm[sensor][name]['Error rate'])
+                except TypeError:
+                    db_phm_eff[k]['zero'] = float(self.phm[sensor][name]['Efficiency'])
+                    db_phm_err[k] = float(self.phm[sensor][name]['Error rate'])
+                except KeyError:
+                    continue
             db_phm_rpr[k] = {}
             db_phm_rpr[k]['zero'] = float(self.system[k]['PHM']['repair']['zero'])
             db_phm_rpr[k]['low'] = float(self.system[k]['PHM']['repair']['low'])

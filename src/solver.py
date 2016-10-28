@@ -11,10 +11,11 @@ class Solver:
         self.bayesian_model = bayesian_model
         self.inference = VariableElimination(self.bayesian_model)
 
-    def get_inference(self, fname, score):
+    def get_inference(self, fname, score, printed):
         # print('%s\n\n' % fname)
         if 'Gate' in fname:
-            # print(self.inference.query([fname], evidence=self.evidence)[fname])
+            if printed:
+                print(self.inference.query([fname], evidence=self.evidence)[fname])
             pass
         else:
             for param in [#'Weakness %s' % fname,
@@ -25,8 +26,12 @@ class Solver:
                     continue
                 if self.evidence:
                     score += self.inference.query([param], evidence=self.evidence)[param].values[0]
+                    if printed:
+                        print(self.inference.query([param], evidence=self.evidence)[param])
                 else:
                     score += self.inference.query([param])[param].values[0]
+                    if printed:
+                        print(self.inference.query([param])[param])
         return score
 
     def get_map_param(self, fname, param):
@@ -42,13 +47,13 @@ class Solver:
                     param.append(p)
         return param
 
-    def run(self, mapquery=False):
+    def run(self, mapquery=False, printed=False):
         # (0 = yes, 1 = no)
         param = []
         score = 0.
         for f in self.display:
             if not mapquery:
-                score += self.get_inference(f, score)
+                score += self.get_inference(f, score, printed)
             else:
                 param = self.get_map_param(f, param)
         if mapquery:

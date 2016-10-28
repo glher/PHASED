@@ -11,7 +11,7 @@ class CombineSensors:
         with open(self.phm_file, 'r') as yml:
             self.phm = ModelData.ordered_load(yml)
         self.truncation = True
-        self.inventory = {'phm_1': 1, 'phm_2': 1, 'phm_3': 2, 'phm_4': 5}
+        self.inventory = {'phm_1': 1, 'phm_2': 1, 'phm_3': 0, 'phm_4': 5}
 
     def run(self):
         phm_sensor_list = self.get_system_sensors()
@@ -35,11 +35,13 @@ class CombineSensors:
                     break
             if exception:
                 continue
-            fm_class = self.model_description['classes'][self.model_description['nodes'][i]].split(' - ')[-1]
+            fm_class = self.model_description['classes'][self.model_description['nodes'][i]].split(' - ')
             #  Read in database to obtain the sensors that can be applied
             for p in self.phm:
-                if fm_class in self.phm[p].keys():
-                    specific_sensors.append(p)
+                for cat in reversed(fm_class):
+                    if cat in self.phm[p].keys():
+                        specific_sensors.append(p)
+                        break
             specific_sensors.append('0')
             phm_sensor_list.append(specific_sensors)
         return phm_sensor_list
@@ -69,7 +71,8 @@ class CombineSensors:
 
         return states
 
-    def truncation_combinations(self, states):
+    @staticmethod
+    def truncation_combinations(states):
         """
         The truncation selects the combinations containing the maximum number of PHM sensors available. All the
         functions and flows that can be equipped with a sensor are.
