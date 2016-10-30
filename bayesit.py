@@ -20,14 +20,14 @@ if __name__ == "__main__":
     # Optimize:
     #   - Display only critical functions/flows
     #   - Do not print
-    display = ['Function 10']
+    display = ['Function 8']
     # Load the data
     model = ModelData()
     model_description = model.load()
     position = CombineSensors(model_description)
     display_final = model_description['nodes']
     states = position.run()
-    if len(states) > 5000:
+    if len(states) > 1000:
         sys.exit('Probably too long, not gonna bother now')
 
     ########################################################################################

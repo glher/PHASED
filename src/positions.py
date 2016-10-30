@@ -11,7 +11,7 @@ class CombineSensors:
         with open(self.phm_file, 'r') as yml:
             self.phm = ModelData.ordered_load(yml)
         self.truncation = True
-        self.inventory = {'phm_1': 1, 'phm_2': 1, 'phm_3': 0, 'phm_4': 5}
+        self.inventory = {'phm_1': 1, 'phm_2': 1, 'phm_3': 0, 'phm_4': 3}
 
     def run(self):
         phm_sensor_list = self.get_system_sensors()
@@ -37,7 +37,8 @@ class CombineSensors:
                 continue
             fm_class = self.model_description['classes'][self.model_description['nodes'][i]].split(' - ')
             #  Read in database to obtain the sensors that can be applied
-            for p in self.phm:
+            available_phm = [p for p in self.inventory if self.inventory[p] > 0]
+            for p in available_phm:
                 for cat in reversed(fm_class):
                     if cat in self.phm[p].keys():
                         specific_sensors.append(p)
