@@ -1,5 +1,5 @@
 import itertools
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from src.model import ModelData
 
 
@@ -11,7 +11,7 @@ class CombineSensors:
         with open(self.phm_file, 'r') as yml:
             self.phm = ModelData.ordered_load(yml)
         self.truncation = True
-        self.inventory = {'phm_1': 1, 'phm_2': 1, 'phm_3': 0, 'phm_4': 3}
+        self.inventory = {'phm_1': 0, 'phm_2': 0, 'phm_3': 0, 'phm_4': 0, '0': len(self.model_description['nodes'])}
 
     def run(self):
         phm_sensor_list = self.get_system_sensors()
@@ -37,13 +37,17 @@ class CombineSensors:
                 continue
             fm_class = self.model_description['classes'][self.model_description['nodes'][i]].split(' - ')
             #  Read in database to obtain the sensors that can be applied
-            available_phm = [p for p in self.inventory if self.inventory[p] > 0]
+            available_phm = [p for p in self.inventory if self.inventory[p] > 0 and p != '0']
             for p in available_phm:
                 for cat in reversed(fm_class):
                     if cat in self.phm[p].keys():
                         specific_sensors.append(p)
                         break
-            specific_sensors.append('0')
+            if self.truncation:
+                if not specific_sensors:
+                    specific_sensors.append('0')
+            else:
+                specific_sensors.append('0')
             phm_sensor_list.append(specific_sensors)
         return phm_sensor_list
 
@@ -53,23 +57,33 @@ class CombineSensors:
         maximum = 1
         for p in phm_positions:
             maximum *= len(phm_positions[p])
-        print('Number of potential combinations: ', maximum)
+        print('Number of minimum combinations: ', maximum)
 
     def inventory_combinations(self, states):
-        inv_adj_states = []
-        for i in states:
-            respect = True
-            combi_set = list(set(i))
-            combi_set.remove('0')
-            for s in combi_set:
-                if i.count(s) > self.inventory[s]:
-                    respect = False
-            if respect:
-                inv_adj_states.append(i)
-        states = inv_adj_states
+        all_states = []
+        for state in states:
+            dups = defaultdict(list)
+            for i, e in enumerate(state):
+                dups[e].append(i)
 
+            potential = OrderedDict()
+            for k, v in sorted(iter(dups.items())):
+                potential[k] = []
+                for i in itertools.combinations(v, self.inventory[k]):
+                    potential[k].append(i)
+                if not potential[k]:
+                    potential[k].append(tuple(v))
+
+            combiset = [potential[i] for i in potential]
+            sensors = [k for k in potential]
+            for combi in itertools.product(*combiset):
+                final = ['0'] * len(state)
+                for j, v in enumerate(combi):
+                    for s in v:
+                        final[s] = sensors[j]
+                all_states.append(final)
+        states = all_states
         print('Number of possible combinations: ', len(states))
-
         return states
 
     @staticmethod
@@ -96,5 +110,4 @@ class CombineSensors:
         print('Number of truncated combinations: ', len(states))
         if len(states) > 1000:
             print('It will take a long time')
-
         return states
