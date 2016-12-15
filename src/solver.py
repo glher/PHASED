@@ -18,20 +18,23 @@ class Solver:
                 print(self.inference.query([fname], evidence=self.evidence)[fname])
             pass
         else:
-            for param in [#'Weakness %s' % fname,
-                          #'Detection %s' % fname,
-                          #'Corrective Action %s' % fname,
+            for param in ['Weakness %s' % fname,
+                          'Detection %s' % fname,
+                          'Corrective Action %s' % fname,
                           'Failure %s' % fname]:
                 if param in self.evidence:
                     continue
-                if self.evidence:
-                    score += self.inference.query([param], evidence=self.evidence)[param].values[0]
-                    if printed:
-                        print(self.inference.query([param], evidence=self.evidence)[param])
-                else:
-                    score += self.inference.query([param])[param].values[0]
-                    if printed:
-                        print(self.inference.query([param])[param])
+                try:
+                    if self.evidence:
+                        score += self.inference.query([param], evidence=self.evidence)[param].values[0]
+                        if printed:
+                            print(self.inference.query([param], evidence=self.evidence)[param])
+                    else:
+                        score += self.inference.query([param])[param].values[0]
+                        if printed:
+                            print(self.inference.query([param])[param])
+                except TypeError:
+                    continue
         return score
 
     def get_map_param(self, fname, param):

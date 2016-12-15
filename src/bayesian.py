@@ -145,8 +145,8 @@ class BayesianNetwork:
             # 0 or 1, action or not. This can be more nuanced, teams available, expertise, training, management, etc.
             # A detection might not automatically generate a corrective action.
             cpd_c = TabularCPD(variable=corrective_action, variable_card=2,
-                               values=[[1., 0., 1., 0., 1., 0., 1., 0.],
-                                       [0., 1., 0., 1., 0., 1., 0., 1.]],
+                               values=[[1., 0., 0.7, 0., 0.95, 0., 0.9, 0.],
+                                       [0., 1., 0.3, 1., 0.05, 1., 0.1, 1.]],
                                evidence=[weakness, detection],
                                evidence_card=[4, 2])
 

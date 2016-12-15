@@ -9,9 +9,9 @@ from collections import OrderedDict
 
 if __name__ == "__main__":
     truncation = True
-    details = False
-    select = False
-    number = 25
+    details = True
+    select = True
+    number = 1
     # Solve the model
     # 1 = n, 0 = y (sorry)
     # Diagnostic:
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     # Optimize:
     #   - Display only critical functions/flows
     #   - Do not print
-    display = ['Function 8']
+    display = ['Function 1']
     # Load the data
     model = ModelData()
     model_description = model.load()
