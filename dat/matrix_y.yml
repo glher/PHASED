@@ -1,20 +1,93 @@
-Control Magnitude:
-    Material Gas:
-        nominal: 0.05
-        low: 0.3
+Provision - Store:
+    Energy - Radioactive:
+        nominal: 0.1
+        low: 0.5
+        high: 0.2
+        zero: 0.2
+    Energy - Thermal:
+        nominal: 0.
+        low: 0.1
         high: 0.3
-        zero: 0.35
+        zero: 0.6
+    Other:
+        nominal: 0.
+        low: 0.
+        high: 0.
+        zero: 1.
+Provision - Store - Contain:
+    Energy - Thermal:
+        nominal: 0.
+        low: 0.1
+        high: 0.3
+        zero: 0.6
+    Material - Liquid:
+        nominal: 0.
+        low: 0.1
+        high: 0.2
+        zero: 0.7
+    Material - Gas:
+        nominal: 0.
+        low: 0.1
+        high: 0.3
+        zero: 0.6
+    Other:
+        nominal: 0.
+        low: 0.
+        high: 0.
+        zero: 1.
+Convert - Convert:
+    Energy - Hydraulic:
+        nominal: 0.
+        low: 0.1
+        high: 0.5
+        zero: 0.4
+    Energy - Thermal:
+        nominal: 0.
+        low: 0.1
+        high: 0.5
+        zero: 0.4
+    Energy - Mechanical:
+        nominal: 0.
+        low: 0.05
+        high: 0.15
+        zero: 0.8
+    Energy - Electrical:
+        nominal: 0.
+        low: 0.
+        high: 0.
+        zero: 1.
+    Energy - Acoustic:
+        nominal: 0.4
+        low: 0.2
+        high: 0.2
+        zero: 0.2
+    Material - Liquid:
+        nominal: 0.
+        low: 0.05
+        high: 0.25
+        zero: 0.7
+    Other:
+        nominal: 0.
+        low: 0.
+        high: 0.
+        zero: 1.
+Channel - Transfer:
+    Material - Liquid:
+        nominal: 0.
+        low: 0.15
+        high: 0.25
+        zero: 0.6
+    Energy - Acoustic:
+        nominal: 0.4
+        low: 0.2
+        high: 0.2
+        zero: 0.2
     Other:
         nominal: 0.
         low: 0.
         high: 0.
         zero: 1.
 Other:
-    Material Gas:
-        nominal: 0.
-        low: 0.
-        high: 0.
-        zero: 1.
     Other:
         nominal: 0.
         low: 0.

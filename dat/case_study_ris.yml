@@ -26,10 +26,10 @@ Function 1:
     Gate:
     PHM:
         repair:
-            zero: 1.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.4
+            low: 0.99
+            high: 0.91
+        fuckup: 0.0002
 Function 2:
     Comment: Vessel
     Class:
@@ -42,9 +42,9 @@ Function 2:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.1
+            low: 0.99
+            high: 0.97
         fuckup: 0.
 Function 3:
     Comment: Primary water
@@ -60,9 +60,9 @@ Function 3:
     Gate: AND
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.7
+            low: 0.99
+            high: 0.94
         fuckup: 0.
 Function 4:
     Comment: Pressurizer
@@ -75,9 +75,9 @@ Function 4:
     Gate:
     PHM:
         repair:
-            zero: 1.
-            low: 0.
-            high: 0.
+            zero: 0.3
+            low: 0.9
+            high: 0.8
         fuckup: 0.
 Function 5:
     Comment: Steam generator
@@ -91,9 +91,9 @@ Function 5:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.4
+            low: 0.94
+            high: 0.83
         fuckup: 0.
 Function 6:
     Comment: Secondary water
@@ -107,10 +107,10 @@ Function 6:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.5
+            low: 0.95
+            high: 0.75
+        fuckup: 0.001
 Function 7:
     Comment: Turbine
     Class:
@@ -123,10 +123,10 @@ Function 7:
     Gate:
     PHM:
         repair:
-            zero: 0.95
-            low: 0.
-            high: 0.
-        fuckup: 0.001
+            zero: 0.5
+            low: 0.99
+            high: 0.90
+        fuckup: 0.003
 Function 8:
     Comment: Generator
     Class:
@@ -139,10 +139,10 @@ Function 8:
     Gate:
     PHM:
         repair:
-            zero: 0.95
-            low: 0.
-            high: 0.
-        fuckup: 0.001
+            zero: 0.5
+            low: 0.98
+            high: 0.87
+        fuckup: 0.004
 Function 9:
     Comment: Condenser
     Class:
@@ -156,10 +156,10 @@ Function 9:
     Gate:
     PHM:
         repair:
-            zero: 0.95
-            low: 0.
-            high: 0.
-        fuckup: 0.001
+            zero: 0.4
+            low: 0.99
+            high: 0.94
+        fuckup: 0.00001
 Function 10:
     Comment: Heat sink
     Class:
@@ -171,10 +171,10 @@ Function 10:
     Gate:
     PHM:
         repair:
-            zero: 0.80
-            low: 0.
-            high: 0.
-        fuckup: 0.001
+            zero: 0.7
+            low: 0.94
+            high: 0.85
+        fuckup: 0.
 Function 11:
     Comment: Secondary pump
     Class:
@@ -188,10 +188,10 @@ Function 11:
     Gate:
     PHM:
         repair:
-            zero: 0.80
-            low: 0.
-            high: 0.
-        fuckup: 0.001
+            zero: 0.1
+            low: 0.9
+            high: 0.7
+        fuckup: 0.
 Function 12:
     Comment: Diesel
     Class:
@@ -204,10 +204,10 @@ Function 12:
     Gate:
     PHM:
         repair:
-            zero: 0.95
-            low: 0.
-            high: 0.
-        fuckup: 0.001
+            zero: 0.9
+            low: 0.98
+            high: 0.93
+        fuckup: 0.01
 Function 13:
     Comment: Diesel
     Class:
@@ -220,10 +220,10 @@ Function 13:
     Gate:
     PHM:
         repair:
-            zero: 0.95
-            low: 0.
-            high: 0.
-        fuckup: 0.001
+            zero: 0.7
+            low: 0.89
+            high: 0.8
+        fuckup: 0.005
 Function 14:
     Comment: Primary pump
     Class:
@@ -237,9 +237,9 @@ Function 14:
     Gate:
     PHM:
         repair:
-            zero: 0.80
-            low: 0.
-            high: 0.
+            zero: 0.05
+            low: 0.5
+            high: 0.2
         fuckup: 0.001
 Flow 10;9:
     Comment: Thermal energy
@@ -252,9 +252,9 @@ Flow 10;9:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.7
+            low: 0.94
+            high: 0.85
         fuckup: 0.
 Flow b;9:
     Comment: Vapor
@@ -267,10 +267,10 @@ Flow b;9:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.5
+            low: 0.99
+            high: 0.90
+        fuckup: 0.003
 Flow 9;11:
     Comment: Water from condenser
     Class:
@@ -282,9 +282,9 @@ Flow 9;11:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.4
+            low: 0.99
+            high: 0.94
         fuckup: 0.
 Flow b;11:
     Comment: Electricity from main generator
@@ -297,10 +297,10 @@ Flow b;11:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.5
+            low: 0.98
+            high: 0.87
+        fuckup: 0.004
 Flow 11;b:
     Comment: Noise
     Class:
@@ -312,9 +312,9 @@ Flow 11;b:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.1
+            low: 0.9
+            high: 0.7
         fuckup: 0.
 Flow 11;6:
     Comment: Water
@@ -327,9 +327,9 @@ Flow 11;6:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.1
+            low: 0.9
+            high: 0.7
         fuckup: 0.
 Flow 6;7:
     Comment: Vapor
@@ -342,10 +342,10 @@ Flow 6;7:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.5
+            low: 0.95
+            high: 0.75
+        fuckup: 0.001
 Flow 6;5:
     Comment: Thermal energy
     Class:
@@ -357,10 +357,10 @@ Flow 6;5:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.5
+            low: 0.95
+            high: 0.75
+        fuckup: 0.001
 Flow 7;b:
     Comment: Vapor
     Class:
@@ -372,10 +372,10 @@ Flow 7;b:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.5
+            low: 0.99
+            high: 0.90
+        fuckup: 0.003
 Flow 7;8:
     Comment: Mechanical energy
     Class:
@@ -387,10 +387,10 @@ Flow 7;8:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.5
+            low: 0.99
+            high: 0.90
+        fuckup: 0.003
 Flow 8;14:
     Comment: Electricity
     Class:
@@ -402,10 +402,10 @@ Flow 8;14:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.5
+            low: 0.98
+            high: 0.87
+        fuckup: 0.004
 Flow 8;b:
     Comment: Noise
     Class:
@@ -417,10 +417,10 @@ Flow 8;b:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.5
+            low: 0.98
+            high: 0.87
+        fuckup: 0.004
 Flow b;12:
     Comment: Fuel
     Class:
@@ -432,10 +432,10 @@ Flow b;12:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.9
+            low: 0.98
+            high: 0.93
+        fuckup: 0.001
 Flow b;13:
     Comment: Fuel
     Class:
@@ -447,10 +447,10 @@ Flow b;13:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.7
+            low: 0.89
+            high: 0.8
+        fuckup: 0.001
 Flow 13;b:
     Comment: Noise
     Class:
@@ -462,10 +462,10 @@ Flow 13;b:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.7
+            low: 0.89
+            high: 0.8
+        fuckup: 0.005
 Flow 12;b:
     Comment: Noise
     Class:
@@ -477,10 +477,10 @@ Flow 12;b:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.9
+            low: 0.98
+            high: 0.93
+        fuckup: 0.01
 Flow 12;14:
     Comment: Electricity
     Class:
@@ -492,10 +492,10 @@ Flow 12;14:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.9
+            low: 0.98
+            high: 0.93
+        fuckup: 0.01
 Flow 13;14:
     Comment: Electricity
     Class:
@@ -507,10 +507,10 @@ Flow 13;14:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.7
+            low: 0.89
+            high: 0.8
+        fuckup: 0.005
 Flow b;14:
     Comment: Water from primary
     Class:
@@ -522,9 +522,9 @@ Flow b;14:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.7
+            low: 0.99
+            high: 0.94
         fuckup: 0.
 Flow 14;b:
     Comment: Noise
@@ -537,10 +537,10 @@ Flow 14;b:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.05
+            low: 0.5
+            high: 0.2
+        fuckup: 0.001
 Flow 14;3:
     Comment: Water
     Class:
@@ -552,10 +552,10 @@ Flow 14;3:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.05
+            low: 0.5
+            high: 0.2
+        fuckup: 0.001
 Flow 5;3:
     Comment: Thermal energy
     Class:
@@ -567,9 +567,9 @@ Flow 5;3:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.4
+            low: 0.94
+            high: 0.83
         fuckup: 0.
 Flow 4;3:
     Comment: Hydraulic energy
@@ -582,9 +582,9 @@ Flow 4;3:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.3
+            low: 0.9
+            high: 0.8
         fuckup: 0.
 Flow 1;3:
     Comment: OOS - Radioactive energy
@@ -597,9 +597,9 @@ Flow 1;3:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.1
+            low: 0.6
+            high: 0.3
         fuckup: 0.
 Flow 3;1:
     Comment: Heat
@@ -612,25 +612,25 @@ Flow 3;1:
     Gate:
     PHM:
         repair:
-            zero: 0.6
+            zero: 0.7
             low: 0.99
-            high: 1.
-        fuckup: 0.005
+            high: 0.94
+        fuckup: 0.
 Flow b;1:
     Comment: Control signal
     Class:
         Primary: Signal
         Secondary: Control
         Tertiary:
-    Weakness: 0.
+    Weakness: 0.001
     Parents: Boundary input
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
-        fuckup: 0.
+            zero: 0.2
+            low: 0.7
+            high: 0.5
+        fuckup: 0.001
 Flow 1;2:
     Comment: OOS - Radioactive energy
     Class:
@@ -642,9 +642,9 @@ Flow 1;2:
     Gate:
     PHM:
         repair:
-            zero: 0.
-            low: 0.
-            high: 0.
+            zero: 0.1
+            low: 0.7
+            high: 0.5
         fuckup: 0.
 Gate f12-f13:
     Comment: OR Gate between function 12 and function 13 and function 8

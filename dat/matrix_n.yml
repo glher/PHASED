@@ -1,20 +1,4 @@
-Control Magnitude:
-    Material Gas:
-        nominal: 0.99
-        low: 0.005
-        high: 0.005
-        zero: 0.
-    Other:
-        nominal: 1.
-        low: 0.
-        high: 0.
-        zero: 0.
 Other:
-    Material Gas:
-        nominal: 1.
-        low: 0.
-        high: 0.
-        zero: 0.
     Other:
         nominal: 1.
         low: 0.
