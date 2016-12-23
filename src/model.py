@@ -5,7 +5,7 @@ from collections import OrderedDict
 class ModelData:
 
     def __init__(self):
-        self.yml_file = 'dat/case_study_ris.yml'
+        self.yml_file = 'dat/case_study_rel.yml'
         with open(self.yml_file, 'r') as yml:
             self.system = self.ordered_load(yml)
         self.phm_file = 'dat/phm.yml'

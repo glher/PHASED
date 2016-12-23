@@ -11,7 +11,7 @@ class CombineSensors:
         with open(self.phm_file, 'r') as yml:
             self.phm = ModelData.ordered_load(yml)
         self.truncation = True
-        self.inventory = {'phm_1': 0, 'phm_2': 0, 'phm_3': 0, 'phm_4': 0, '0': len(self.model_description['nodes'])}
+        self.inventory = {'phm_1': 20, 'phm_2': 20, 'phm_3': 20, 'phm_4': 0, '0': len(self.model_description['nodes'])}
 
     def run(self):
         phm_sensor_list = self.get_system_sensors()
